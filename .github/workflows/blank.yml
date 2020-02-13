@@ -12,7 +12,15 @@ jobs:
     - name: Install Homebrew
       run: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     - name: Install dependencies
-      run: brew install cmake make gcc clang bison xquartz flex mingw-w64 pkgconfig
+      run: |
+        brew install cmake
+        brew install make
+        brew install gcc
+        brew install bison
+        brew install xquartz
+        brew install flex
+        brew install mingw-w64
+        brew install pkgconfig
     - name: Preconfiguring LLVM
       run: |
         cd llvm
