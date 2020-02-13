@@ -25,14 +25,9 @@ jobs:
         cd build
         cmake ../
     - name: Compiling LLVM
-      run: make -j7
-    - name: Configuring Environment Variables for LLVM
       run: |
-        cd bin
-        export PATH="$(pwd):$PATH"
-        cd ../
-    - name: Go back to Root
-      run: cd ../../
+        cd llvm/build
+        make -j7
     - name: Preconfiguring Clang
       run: |
         cd clang
@@ -40,25 +35,22 @@ jobs:
         cd build
         cmake ../
     - name: Compiling Clang
-      run: make -j7
-    - name: Configuring Environment Variables for Clang
       run: |
-        cd bin
-        export PATH="$(pwd):$PATH"
-        cd ../
-    - name: Go back to Root
-      run: cd ../../
+        export PATH="$(pwd)/llvm/build/bin:$PATH"
+        cd clang/build
+        make -j7
     - name: Preconfiguring Wine
       run: |
+        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
         cd wine
         ./configure --enable-win32on64
       env:
         CC: clang
         CXX: clang++
     - name: Compiling Wine
-      run: make -j7
-    - name: Go back to Root
-      run: cd ../
+      run: |
+        cd wine
+        make -j7
     - name: Packaging Wine
       run: tar -czvf the-wine.tar.gz ./wine
     - name: Upload Release
