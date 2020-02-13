@@ -27,7 +27,7 @@ jobs:
     - name: Compiling LLVM
       run: |
         cd llvm/build
-        make -j7
+        make -j8
     - name: Preconfiguring Clang
       run: |
         cd clang
@@ -37,11 +37,58 @@ jobs:
     - name: Compiling Clang
       run: |
         export PATH="$(pwd)/llvm/build/bin:$PATH"
-        cd clang/build
-        make -j7
-    - name: Preconfiguring Wine
+        cd gnutls/
+        make -j8
+    - name: Compiling GnuTLS/gmp
       run: |
         export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
+        cd gnutls/gmp
+        ./configure
+        make -j8
+      env:
+        CC: clang
+        CXX: clang++
+    - name: Compiling GnuTLS/nettle
+      run: |
+        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
+        cd gnutls/nettle
+        ./configure
+        make -j8
+      env:
+        CC: clang
+        CXX: clang++
+    - name: Compiling GnuTLS
+      run: |
+        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
+        cd gnutls/gmp
+        ./configure
+        make -j8
+      env:
+        CC: clang
+        CXX: clang++
+    - name: Compiling FreeType
+      run: |
+        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
+        cd freetype
+        mkdir build
+        cd build
+        cmake ../
+        make -j8
+      env:
+        CC: clang
+        CXX: clang++
+    - name: Compiling SMB3
+      run: |
+        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
+        cd samba3/source
+        ./configure
+        make -j8
+      env:
+        CC: clang
+        CXX: clang++
+    - name: Preconfiguring Wine
+      run: |
+        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/samba3/source:$(pwd)/freetype/build:$(pwd)/gnutls/gmp:$(pwd)/gnutls/gnutls:$(pwd)/gnutls/nettle:$PATH"
         cd wine
         ./configure --enable-win32on64
       env:
@@ -51,12 +98,22 @@ jobs:
       run: |
         cd wine
         make -j7
+    - name: Packaging LLVM
+      run: tar -czvf clang-macos.tar.gz ./clang/build
+    - name: Packaging LLVM
+      run: tar -czvf llvm-macos.tar.gz ./llvm/build
     - name: Packaging Wine
-      run: tar -czvf the-wine.tar.gz ./wine
-    - name: Upload Release
-      uses: yakuhzi/action-release@v1.2.0
+      run: tar -czvf wine-macos.tar.gz ./wine
+    - name: Move Artifacts
+      run: |
+        mkdir artifacts
+        mv *.tar.gz ./artifacts
+    - name: Upload Artifacts
+      uses: actions/upload-artifact@v1.0.0
       with:
-        # File to upload to the release
-        file: the-wine.tar.gz
+        # Artifact name
+        name: Compiled Results
+        # Directory containing files to upload
+        path: artifacts
       
         
