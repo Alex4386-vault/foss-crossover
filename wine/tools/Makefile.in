@@ -1,0 +1,10 @@
+PROGRAMS = \
+	make_xftmpl
+
+C_SRCS = \
+	make_xftmpl.c
+
+EXTRADEFS = $(HOSTSTACK_CFLAGS)
+
+IN_SRCS = \
+	wineapploader.in

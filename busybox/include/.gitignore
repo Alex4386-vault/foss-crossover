@@ -1,0 +1,12 @@
+/config
+
+/applets.h
+/applet_tables.h
+/autoconf.h
+/bbconfigopts_bz2.h
+/bbconfigopts.h
+/common_bufsiz.h
+/common_bufsiz.h.method
+/NUM_APPLETS.h
+/usage_compressed.h
+/usage.h

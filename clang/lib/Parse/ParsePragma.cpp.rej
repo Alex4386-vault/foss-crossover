@@ -1,0 +1,16 @@
+diff a/lib/Parse/ParsePragma.cpp b/lib/Parse/ParsePragma.cpp	(rejected hunks)
+@@ -1542,8 +1550,12 @@ void Parser::HandlePragmaAttribute() {
+   // Consume the eof terminator token.
+   ConsumeToken();
+ 
+-  Actions.ActOnPragmaAttributePush(Attribute, PragmaLoc,
+-                                   std::move(SubjectMatchRules));
++  // Handle a mixed push/attribute by desurging to a push, then an attribute.
++  if (Info->Action == PragmaAttributeInfo::Push)
++    Actions.ActOnPragmaAttributeEmptyPush(PragmaLoc);
++
++  Actions.ActOnPragmaAttributeAttribute(Attribute, PragmaLoc,
++                                        std::move(SubjectMatchRules));
+ }
+ 
+ // #pragma GCC visibility comes in two variants:

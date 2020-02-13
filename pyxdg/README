@@ -1,0 +1,8 @@
+This package contains a Python implementation of the XDG-Base-Directory Standard:
+
+  http://standards.freedesktop.org/basedir-spec/
+
+However it has just been extracted from the regular pyxdg package.
+So it is recommended you get the original source at:
+
+  http://freedesktop.org/wiki/Software/pyxdg/

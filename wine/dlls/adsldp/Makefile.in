@@ -1,0 +1,10 @@
+MODULE    = adsldp.dll
+IMPORTS   = oleaut32 secur32
+
+EXTRADLLFLAGS = -mno-cygwin
+
+C_SRCS = \
+	adsldp.c
+
+IDL_SRCS = \
+	adsldp.idl

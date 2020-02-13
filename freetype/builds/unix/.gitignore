@@ -1,0 +1,6 @@
+/unix-def.mk
+/unix-cc.mk
+/libtool
+/ftconfig.h
+/freetype-config
+/freetype2.pc

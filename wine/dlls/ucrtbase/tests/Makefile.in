@@ -1,0 +1,8 @@
+TESTDLL   = ucrtbase.dll
+
+C_SRCS = \
+	cpp.c \
+	misc.c \
+	printf.c \
+	scanf.c \
+	string.c

@@ -1,0 +1,49 @@
+The Wine development release 4.12.1 is now available.
+
+What's new in this release (see below for details):
+  - Fixes for broken 64-bit prefix initialization.
+
+The source is available from the following locations:
+
+  https://dl.winehq.org/wine/source/4.x/wine-4.12.1.tar.xz
+  http://mirrors.ibiblio.org/wine/source/4.x/wine-4.12.1.tar.xz
+
+Binary packages for various distributions will be available from:
+
+  https://www.winehq.org/download
+
+You will find documentation on https://www.winehq.org/documentation
+
+You can also get the current source directly from the git
+repository. Check https://www.winehq.org/git for details.
+
+Wine is available thanks to the work of many people. See the file
+AUTHORS in the distribution for the complete list.
+
+----------------------------------------------------------------
+
+Bugs fixed in 4.12.1 (total 5):
+
+  46473  Settlers IV History Edition
+  47403  ALT+TAB results in a sticky ALT in the application when switching back
+  47464  64-bit WINEPREFIX creation/update fails with Wine 4.12 (wineboot crashes after building as PE file)
+  47467  WINEPREFIX creation/update: setupapi fails to register several dlls after building as PE file starting with Wine 4.12
+  47468  LINE 5.x launcher crashes on startup
+
+----------------------------------------------------------------
+
+Changes since 4.12:
+
+Alexandre Julliard (5):
+      wineboot: Fix do_cpuid() calling convention.
+      kernel32: Set the path environment variables according to the WoW64 environment.
+      include: Make sure the JUMP_BUFFER structure is correctly aligned on x86-64
+      gdi32: Make GDI driver functions cdecl.
+      d3dcompiler: Make varargs functions WINAPIV.
+
+Henri Verbeet (1):
+      wined3d: Handle context acquisition failure in wined3d_device_create_primary_opengl_context_cs().
+
+--
+Alexandre Julliard
+julliard@winehq.org
