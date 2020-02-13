@@ -40,33 +40,33 @@ jobs:
         export PATH="$(pwd)/llvm/build/bin:$PATH"
         cd clang/build/
         make -j`sysctl -n hw.logicalcpu`
-    - name: Compiling GnuTLS/gmp
-      run: |
-        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
-        cd gnutls/gmp
-        ./configure
-        make -j`sysctl -n hw.logicalcpu`
-      env:
-        CC: clang
-        CXX: clang++
-    - name: Compiling GnuTLS/nettle
-      run: |
-        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/gnutls/gmp:$PATH"
-        cd gnutls/nettle
-        ./configure
-        make -j8
-      env:
-        CC: clang
-        CXX: clang++
-    - name: Compiling GnuTLS
-      run: |
-        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/gnutls/gmp:$(pwd)/gnutls/nettle:$PATH"
-        cd gnutls/gmp
-        ./configure
-        make -j`sysctl -n hw.logicalcpu`
-      env:
-        CC: clang
-        CXX: clang++
+#    - name: Compiling GnuTLS/gmp
+#      run: |
+#        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
+#        cd gnutls/gmp
+#        ./configure
+#        make -j`sysctl -n hw.logicalcpu`
+#      env:
+#        CC: clang
+#        CXX: clang++
+#    - name: Compiling GnuTLS/nettle
+#      run: |
+#        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/gnutls/gmp:$PATH"
+#        cd gnutls/nettle
+#        ./configure
+#        make -j8
+#      env:
+#        CC: clang
+#        CXX: clang++
+#    - name: Compiling GnuTLS
+#      run: |
+#        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/gnutls/gmp:$(pwd)/gnutls/nettle:$PATH"
+#        cd gnutls/gmp
+#        ./configure
+#        make -j`sysctl -n hw.logicalcpu`
+#      env:
+#        CC: clang
+#        CXX: clang++
     - name: Compiling FreeType
       run: |
         export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
