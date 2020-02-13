@@ -51,7 +51,7 @@ jobs:
         CXX: clang++
     - name: Compiling GnuTLS/nettle
       run: |
-        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
+        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/gnutls/gmp:$PATH"
         cd gnutls/nettle
         ./configure
         make -j8
@@ -60,7 +60,7 @@ jobs:
         CXX: clang++
     - name: Compiling GnuTLS
       run: |
-        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
+        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/gnutls/gmp:$(pwd)/gnutls/nettle:$PATH"
         cd gnutls/gmp
         ./configure
         make -j`sysctl -n hw.logicalcpu`
@@ -91,6 +91,7 @@ jobs:
       run: |
         export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/samba3/source:$(pwd)/freetype/build:$(pwd)/gnutls/gmp:$(pwd)/gnutls/gnutls:$(pwd)/gnutls/nettle:$PATH"
         cd wine
+        touch programs/winedbg/distversion.h
         ./configure --enable-win32on64
       env:
         CC: clang
