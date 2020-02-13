@@ -13,9 +13,6 @@ jobs:
       run: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
     - name: Install dependencies
       run: |
-        brew install cmake
-        brew install make
-        brew install gcc
         brew install bison
         brew install xquartz
         brew install flex
