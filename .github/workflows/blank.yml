@@ -1,0 +1,65 @@
+name: build
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: [macos]
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Install Homebrew
+      run: /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    - name: Install dependencies
+      run: brew install cmake make gcc clang bison xquartz flex mingw-w64 pkgconfig
+    - name: Preconfiguring LLVM
+      run: |
+        cd llvm
+        mkdir build
+        cd build
+        cmake ../
+    - name: Compiling LLVM
+      run: make -j7
+    - name: Configuring Environment Variables for LLVM
+      run: |
+        cd bin
+        export PATH="$(pwd):$PATH"
+        cd ../
+    - name: Go back to Root
+      run: cd ../../
+    - name: Preconfiguring Clang
+      run: |
+        cd clang
+        mkdir build
+        cd build
+        cmake ../
+    - name: Compiling Clang
+      run: make -j7
+    - name: Configuring Environment Variables for Clang
+      run: |
+        cd bin
+        export PATH="$(pwd):$PATH"
+        cd ../
+    - name: Go back to Root
+      run: cd ../../
+    - name: Preconfiguring Wine
+      run: |
+        cd wine
+        ./configure --enable-win32on64
+      env:
+        CC: clang
+        CXX: clang++
+    - name: Compiling Wine
+      run: make -j7
+    - name: Go back to Root
+      run: cd ../
+    - name: Packaging Wine
+      run: tar -czvf the-wine.tar.gz ./wine
+    - name: Upload Release
+      uses: yakuhzi/action-release@v1.2.0
+      with:
+        # File to upload to the release
+        file: the-wine.tar.gz
+      
+        
