@@ -93,7 +93,7 @@ jobs:
         export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/freetype/build:$PATH"
         cd wine
         touch programs/winedbg/distversion.h
-        ./configure --enable-win64 --enable-win32on64
+        ./configure --enable-win32on64
       env:
         CC: clang
         CXX: clang++
@@ -101,7 +101,7 @@ jobs:
       run: |
         cd wine
         make -j`sysctl -n hw.logicalcpu`
-    - name: Packaging LLVM
+    - name: Packaging Clang
       run: tar -czvf clang-macos.tar.gz ./clang/build
     - name: Packaging LLVM
       run: tar -czvf llvm-macos.tar.gz ./llvm/build
