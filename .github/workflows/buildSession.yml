@@ -28,6 +28,18 @@ jobs:
       run: |
         cd llvm/build
         make -j`sysctl -n hw.logicalcpu`
+#    - name: Packaging LLVM
+#      run: |
+#        tar -czvf llvm-macos.tar.gz ./llvm/build
+#        mkdir llvm-build
+#        mv llvm-macos.tar.gz llvm-build
+#    - name: Upload LLVM
+#      uses: actions/upload-artifact@v1.0.0
+#      with:
+#        # Artifact name
+#        name: LLVM Compile Results
+#        # Directory containing files to upload
+#        path: llvm-build
     - name: Preconfiguring Clang
       run: |
         export PATH="$(pwd)/llvm/build/bin:$PATH"
@@ -40,6 +52,18 @@ jobs:
         export PATH="$(pwd)/llvm/build/bin:$PATH"
         cd clang/build/
         make -j`sysctl -n hw.logicalcpu`
+    - name: Packaging Clang
+      run: |
+        tar -czvf clang-macos.tar.gz ./clang/build
+        mkdir clang-build
+        mv clang-macos.tar.gz clang-build
+    - name: Upload Clang
+      uses: actions/upload-artifact@v1.0.0
+      with:
+        # Artifact name
+        name: clang for macOS
+        # Directory containing files to upload
+        path: clang-build
 #    - name: Compiling GnuTLS/gmp
 #      run: |
 #        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$PATH"
@@ -103,22 +127,18 @@ jobs:
         export PATH="/usr/local/opt/bison/bin:/usr/local/opt/flex/bin:$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/freetype/build:$PATH"
         cd wine
         make -j`sysctl -n hw.logicalcpu`
-    - name: Packaging Clang
-      run: tar -czvf clang-macos.tar.gz ./clang/build
-    - name: Packaging LLVM
-      run: tar -czvf llvm-macos.tar.gz ./llvm/build
     - name: Packaging Wine
       run: tar -czvf wine-macos.tar.gz ./wine
     - name: Move Artifacts
       run: |
-        mkdir artifacts
-        mv *.tar.gz ./artifacts
+        mkdir wine-build
+        mv wine-macos.tar.gz wine-build/
     - name: Upload Artifacts
       uses: actions/upload-artifact@v1.0.0
       with:
         # Artifact name
-        name: Compiled Results
+        name: Wine for macOS Catalina (WOW64)
         # Directory containing files to upload
-        path: artifacts
+        path: wine-build
       
         
