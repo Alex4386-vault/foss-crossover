@@ -98,6 +98,7 @@ jobs:
         CC: clang
         CXX: clang++
     - name: Compiling Wine
+      continue-on-error: true
       run: |
         export PATH="/usr/local/opt/bison/bin:/usr/local/opt/flex/bin:$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/freetype/build:$PATH"
         cd wine
