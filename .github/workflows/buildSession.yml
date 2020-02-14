@@ -99,6 +99,7 @@ jobs:
         CXX: clang++
     - name: Compiling Wine
       run: |
+        export PATH="/usr/local/opt/bison/bin:/usr/local/opt/flex/bin:$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/freetype/build:$PATH"
         cd wine
         make -j`sysctl -n hw.logicalcpu`
     - name: Packaging Clang
