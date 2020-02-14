@@ -90,7 +90,7 @@ jobs:
     - name: Preconfiguring Wine
 #        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/samba3/source:$(pwd)/freetype/build:$(pwd)/gnutls/gmp:$(pwd)/gnutls/gnutls:$(pwd)/gnutls/nettle:$PATH"
       run: |
-        export PATH="$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/freetype/build:$PATH"
+        export PATH="/usr/local/opt/bison/bin:/usr/local/opt/flex/bin:$(pwd)/clang/build/bin:$(pwd)/llvm/build/bin:$(pwd)/freetype/build:$PATH"
         cd wine
         touch programs/winedbg/distversion.h
         ./configure --enable-win32on64
